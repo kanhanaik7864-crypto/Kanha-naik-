@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Computer Fundamentals Quiz</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f0f2f5;padding:16px;color:#1a1a1a}
+    .wrap{max-width:680px;margin:0 auto;background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+    h1{text-align:center;color:#2563eb;margin-bottom:6px}
+    .sub{text-align:center;color:#64748b;margin-bottom:20px;font-size:.9rem}
+    .card{background:#f8fafc;border-left:4px solid #2563eb;padding:14px;margin:16px 0;border-radius:0 8px 8px 0}
+    .q{font-weight:600;margin-bottom:10px}
+    .opts label{display:flex;align-items:center;padding:10px;margin:6px 0;background:#fff;border:1px solid #e2e8f0;border-radius:6px;cursor:pointer}
+    .opts label:hover{background:#eff6ff;border-color:#2563eb}
+    .opts input{margin-right:10px;accent-color:#2563eb}
+    .btn{display:block;width:100%;padding:14px;background:#2563eb;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:12px}
+    .btn:active{background:#1d4ed8}
+    #res{display:none;text-align:center;margin-top:20px;padding:18px;background:#ecfdf5;border:2px solid #86efac;border-radius:10px}
+    .sc{font-size:2.2rem;font-weight:800;color:#166534;margin:8px 0}
+    .fb{color:#15803d;margin-bottom:12px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>💻 Computer Fundamentals Quiz</h1>
+    <p class="sub">20 Questions • Multiple Choice • Auto-Graded</p>
+    <form id="qz"></form>
+    <button class="btn" onclick="grade()">Submit Answers</button>
+    <div id="res">
+      <h2>Quiz Complete! 🎉</h2>
+      <div class="sc" id="sc">0/20</div>
+      <p class="fb" id="fb"></p>
+      <button class="btn" onclick="location.reload()" style="background:#4f46e5">Retake Quiz</button>
+    </div>
+  </div>
+  <script>
+    const Q=[
+      {q:"1. What does CPU stand for?",o:["Central Process Unit","Central Processing Unit","Computer Personal Unit","Central Processor Utility"],a:1},
+      {q:"2. Which is an input device?",o:["Monitor","Printer","Keyboard","Speaker"],a:2},
+      {q:"3. What is the 'brain' of the computer?",o:["Hard Disk","CPU","RAM","Mouse"],a:1},
+      {q:"4. RAM stands for:",o:["Read Access Memory","Random Access Memory","Run Accept Memory","Real Active Memory"],a:1},
+      {q:"5. Which memory loses data when power is off?",o:["ROM","Hard Drive","RAM","Flash Drive"],a:2},
+      {q:"6. 1 Byte equals:",o:["4 bits","8 bits","16 bits","32 bits"],a:1},
+      {q:"7. Which is an Operating System?",o:["Chrome","Word","Windows 10","Intel"],a:2},
+      {q:"8. GUI stands for:",o:["Gaming User Interface","Graphical User Interface","Global Unit Interface","General Usage Internet"],a:1},
+      {q:"9. Which connects computers in a network?",o:["Router","Scanner","Plotter","Microphone"],a:0},
+      {q:"10. URL stands for:",o:["Uniform Resource Locator","Universal Resource Link","Unified Remote Location","User Resource Link"],a:0},
+      {q:"11. Shortcut to 'Copy' text?",o:["Ctrl+V","Ctrl+X","Ctrl+C","Ctrl+P"],a:2},
+      {q:"12. SSD stands for:",o:["Solid State Drive","Super Speed Disk","Serial Storage Device","System State Data"],a:0},
+      {q:"13. Which is NOT a browser?",o:["Firefox","Chrome","Excel","Safari"],a:2},
+      {q:"14. HTTP stands for:",o:["HyperText Transfer Protocol","High Text Transfer Process","HyperText Transmission Program","Home Tool Transfer Protocol"],a:0},
+      {q:"15. Physical parts of a computer are called:",o:["Software","Hardware","Malware","Firmware"],a:1},
+      {q:"16. Which stores data permanently?",o:["RAM","Cache","Hard Disk","Register"],a:2},
+      {q:"17. Main function of Antivirus?",o:["Speed up PC","Protect from Malware","Clean Screen","Save Files"],a:1},
+      {q:"18. LAN stands for:",o:["Large Area Network","Local Area Network","Long Access Node","Legal Area Network"],a:1},
+      {q:"19. Shortcut to 'Undo'?",o:["Ctrl+U","Ctrl+Z","Ctrl+Y","Ctrl+A"],a:1},
+      {q:"20. Father of the computer?",o:["Alan Turing","Charles Babbage","Bill Gates","Steve Jobs"],a:1}
+    ];
+    const f=document.getElementById('qz');
+    Q.forEach((x,i)=>{
+      const d=document.createElement('div');d.className='card';
+      let h=`<div class="q">${x.q}</div><div class="opts">`;
+      x.o.forEach((o,j)=>h+=`<label><input type="radio" name="q${i}" value="${j}">${o}</label>`);
+      d.innerHTML=h+'</div>';f.appendChild(d);
+    });
+    function grade(){
+      let s=0,ans=0;
+      Q.forEach((x,i)=>{
+        const c=document.querySelector(`input[name="q${i}"]:checked`);
+        if(c){ans++;if(+c.value===x.a)s++;}
+      });
+      if(ans<Q.length&&!confirm(`Answered ${ans}/${Q.length}. Submit anyway?`))return;
+      document.getElementById('sc').textContent=s+'/20';
+      const p=(s/Q.length)*100;
+      const fb=document.getElementById('fb');
+      fb.textContent=p===100?'🌟 Perfect! You are a Computer Wizard!':p>=80?'👏 Excellent work!':p>=50?'👍 Good job! Keep studying.':'📚 Keep practicing! Review basics.';
+      document.querySelector('.btn').style.display='none';
+      document.getElementById('res').style.display='block';
+      document.getElementById('res').scrollIntoView({behavior:'smooth'});
+    }
+  </script>
+</body>
+</html>
